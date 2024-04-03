@@ -1,0 +1,51 @@
+name: Setup Node.js environment
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v4.0.2
+        with:
+          # Set always-auth in npmrc for private packages.
+          always-auth: true # Change to false if not using private packages, default is false
+
+          # Specify Node.js version. Use .nvmrc or package.json to specify the version or manually enter it.
+          node-version: '20.x' # Example version, adjust based on your project's needs
+
+          # If you have a file specifying Node.js version, uncomment and use one of the following:
+          # node-version-file: '.nvmrc' # Assuming you have an .nvmrc file
+          # node-version-file: 'package.json' # To use the version specified in package.json
+
+          # Specify architecture if necessary, defaults to system architecture.
+          architecture: 'x64' # Change if your project requires a specific architecture
+
+          # If you want the action to check for the latest version that satisfies the version spec.
+          check-latest: true # Change to false if this behavior is not desired
+
+          # Setup registry URL for npm or yarn. Useful for GitHub Packages or private registries.
+          registry-url: 'https://npm.pkg.github.com/' # Example: GitHub Packages registry
+
+          # Optional scope for registry, useful for scoped packages.
+          scope: '@pchj' # Adjust to match your GitHub username or organization, or specific scope needed
+
+          # Token for accessing private packages or to avoid rate limits. Defaults handle GitHub actions and public GitHub.
+          token: ${{ secrets.GITHUB_TOKEN }} # Use GITHUB_TOKEN for public repos or add a personal/custom token as a secret for private access
+
+          # Specify package manager for caching (npm, yarn, pnpm). Uncomment to use.
+          cache: 'npm' # Choose npm, yarn, or pnpm based on your project
+
+          # Specify the path to dependency file for caching. Support for wildcards or list of filenames.
+          cache-dependency-path: '**/package-lock.json' # Adjust based on your dependency file locations
