@@ -24,7 +24,6 @@ jobs:
 
   analyze:
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/staging'  # Only run the analysis job if the branch is staging
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
