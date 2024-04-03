@@ -5,6 +5,7 @@ import glob
 # Function to analyze a Jupyter Notebook
 def analyze_notebooks():
     notebook_files = glob.glob("*.ipynb")  # Find all notebook files in the current directory
+    notebook_files = [file for file in notebook_files if file != "output.ipynb"]  # Exclude output.ipynb
     for notebook_path in notebook_files:
         with open(notebook_path) as f:
             nb = nbformat.read(f, as_version=4)
