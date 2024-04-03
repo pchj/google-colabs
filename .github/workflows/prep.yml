@@ -36,3 +36,5 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           cache: 'npm'
           cache-dependency-path: '**/package-lock.json'
+
+npm install @observablehq/plot @observablehq/inputs @observablehq/runtime @observablehq/stdlib
