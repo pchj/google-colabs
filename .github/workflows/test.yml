@@ -1,0 +1,29 @@
+name: Notebook Tests
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install nbval papermill  # Install nbval and papermill for testing notebooks
+
+      - name: Execute Notebook Tests
+        run: |
+          papermill --prepare-only analyze_notebooks.ipynb output_notebook.ipynb  # Execute notebook with papermill
+          nbval output_notebook.ipynb  # Validate notebook output with nbval
