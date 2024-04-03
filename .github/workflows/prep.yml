@@ -1,4 +1,4 @@
-name: build
+name: Build
 
 on:
   workflow_run:
@@ -33,6 +33,15 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3  # Updated to v3
+
+      - name: Create virtual environment
+        run: python -m venv me-colabs-env
+
+      - name: Activate virtual environment and Install Dependencies
+        run: |
+          source me-colabs-env/bin/activate
+          python -m pip install --upgrade pip
+          pip install nbval papermill nbformat nbconvert  # Install nbval, papermill, and other necessary dependencies
 
       - name: Run a multi-line script
         run: |
