@@ -1,4 +1,4 @@
-# GitHub Actions Workflow
+# Colabs
 
 ## Overview
 This repository contains a GitHub Actions workflow that automates the analysis of Jupyter Notebook files using Python scripts.
