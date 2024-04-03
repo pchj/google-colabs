@@ -1,4 +1,4 @@
-name: test
+name: Test
 
 on:
   workflow_run:
@@ -29,6 +29,9 @@ jobs:
           python -m pip install --upgrade pip
           pip install nbval papermill nbformat nbconvert  # Install nbval, papermill, and other necessary dependencies
 
-      - name: Execute Notebook Tests
-        run: |
-          python analyze_notebooks.py  # Execute notebook analysis script
+      - name: Find Notebook Files
+        id: find_notebooks
+        run: find . -name "*.ipynb*" ! -name "output_notebook.ipynb" -exec echo {} +
+
+      - name: Analyze Notebooks
+        run: python analyze_notebooks.py ${{ steps.find_notebooks.outputs.notebooks }}
