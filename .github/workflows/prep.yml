@@ -16,7 +16,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      # New step to ensure package.json and package-lock.json exist
       - name: Ensure package.json & package-lock.json
         run: |
           if [ ! -f package.json ]; then
@@ -37,4 +36,18 @@ jobs:
           cache: 'npm'
           cache-dependency-path: '**/package-lock.json'
 
-npm install @observablehq/plot @observablehq/inputs @observablehq/runtime @observablehq/stdlib
+      - name: Install Node.js dependencies
+        run: npm install @observablehq/plot @observablehq/inputs @observablehq/runtime @observablehq/stdlib
+
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install nbval papermill nbformat nbconvert ipython
